@@ -1,0 +1,14 @@
+{
+  "name": "blog",
+  "description": "Blog api",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+	"express-jwt": "*",
+    "prerender-node": "~0.1.15",
+	"bcrypt-nodejs": "*",
+	"jsonwebtoken" : "*",
+	"mongoose" : "*"
+  }
+}
