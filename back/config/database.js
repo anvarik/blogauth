@@ -34,7 +34,8 @@ var Post = new Schema({
 
 
 // Bcrypt middleware on UserSchema
-User.pre('save', function(next) {
+User.pre('save', function (next) {
+    console.log('pre called');
   var user = this;
 
   if (!user.isModified('password')) return next();
@@ -42,8 +43,9 @@ User.pre('save', function(next) {
   bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
     if (err) return next(err);
 
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(user.password, salt, null,  function(err, hash) {
         if (err) return next(err);
+        console.log(hash);
         user.password = hash;
         next();
     });
@@ -62,7 +64,6 @@ User.methods.comparePassword = function(password, cb) {
 //Define Models
 var userModel = mongoose.model('User', User);
 var postModel = mongoose.model('Post', Post);
-
 
 // Export Models
 exports.userModel = userModel;
