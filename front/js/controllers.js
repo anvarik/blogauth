@@ -1,5 +1,5 @@
-appControllers.controller('PostListCtrl', ['$scope', '$sce', 'PostService',
-    function PostListCtrl($scope, $sce, PostService) {
+angular.module('appControllers', ['appServices']).controller('PostListCtrl', ['$scope', '$sce', 'PostService',
+    function($scope, $sce, PostService) {
 
         $scope.posts = [];
 
@@ -16,8 +16,8 @@ appControllers.controller('PostListCtrl', ['$scope', '$sce', 'PostService',
     }
 ]);
 
-appControllers.controller('PostViewCtrl', ['$scope', '$routeParams', '$location', '$sce', 'PostService',
-    function PostViewCtrl($scope, $routeParams, $location, $sce, PostService) {
+angular.module('appControllers').controller('PostViewCtrl', ['$scope', '$routeParams', '$location', '$sce', 'PostService',
+    function($scope, $routeParams, $location, $sce, PostService) {
 
         $scope.post = {};
         var id = $routeParams.id;
@@ -33,8 +33,8 @@ appControllers.controller('PostViewCtrl', ['$scope', '$routeParams', '$location'
 ]);
 
 
-appControllers.controller('AdminPostListCtrl', ['$scope', 'PostService', 
-    function AdminPostListCtrl($scope, PostService) {
+angular.module('appControllers').controller('AdminPostListCtrl', ['$scope', '$location', '$window', 'PostService', 'AuthenticationService', 'UserService', 
+    function ($scope, $location, $window, PostService, AuthenticationService, UserService) {
         $scope.posts = [];
 
         PostService.findAll().success(function(data) {
@@ -77,11 +77,28 @@ appControllers.controller('AdminPostListCtrl', ['$scope', 'PostService',
                 });
             }
         }
+
+        $scope.logout = function logout() {
+            if (AuthenticationService.isLogged) {
+
+                UserService.logOut().success(function (data) {
+                    AuthenticationService.isLogged = false;
+                    delete $window.sessionStorage.token;
+                    $location.path("/");
+                }).error(function (status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+            else {
+                $location.path("/admin/login");
+            }
+        }
     }
 ]);
 
-appControllers.controller('AdminPostCreateCtrl', ['$scope', '$location', 'PostService',
-    function AdminPostCreateCtrl($scope, $location, PostService) {
+angular.module('appControllers').controller('AdminPostCreateCtrl', ['$scope', '$location', 'PostService',
+    function($scope, $location, PostService) {
         $('#textareaContent').wysihtml5({"font-styles": false});
 
         $scope.save = function save(post, shouldPublish) {
@@ -111,8 +128,8 @@ appControllers.controller('AdminPostCreateCtrl', ['$scope', '$location', 'PostSe
     }
 ]);
 
-appControllers.controller('AdminPostEditCtrl', ['$scope', '$routeParams', '$location', '$sce', 'PostService',
-    function AdminPostEditCtrl($scope, $routeParams, $location, $sce, PostService) {
+angular.module('appControllers').controller('AdminPostEditCtrl', ['$scope', '$routeParams', '$location', '$sce', 'PostService',
+    function($scope, $routeParams, $location, $sce, PostService) {
         $scope.post = {};
         var id = $routeParams.id;
 
@@ -155,8 +172,8 @@ appControllers.controller('AdminPostEditCtrl', ['$scope', '$routeParams', '$loca
     }
 ]);
 
-appControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',  
-    function AdminUserCtrl($scope, $location, $window, UserService, AuthenticationService) {
+angular.module('appControllers').controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
+    function($scope, $location, $window, UserService, AuthenticationService) {
 
         //Admin User Controller (login, logout)
         $scope.logIn = function logIn(username, password) {
@@ -173,28 +190,13 @@ appControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window', 'U
             }
         }
 
-        $scope.logout = function logout() {
-            if (AuthenticationService.isLogged) {
-                
-                UserService.logOut().success(function(data) {
-                    AuthenticationService.isLogged = false;
-                    delete $window.sessionStorage.token;
-                    $location.path("/");
-                }).error(function(status, data) {
-                    console.log(status);
-                    console.log(data);
-                });
-            }
-            else {
-                $location.path("/admin/login");
-            }
-        }
+        
     }
 ]);
 
 
-appControllers.controller('PostListTagCtrl', ['$scope', '$routeParams', '$sce', 'PostService',
-    function PostListTagCtrl($scope, $routeParams, $sce, PostService) {
+angular.module('appControllers').controller('PostListTagCtrl', ['$scope', '$routeParams', '$sce', 'PostService',
+    function($scope, $routeParams, $sce, PostService) {
 
         $scope.posts = [];
         var tagName = $routeParams.tagName;

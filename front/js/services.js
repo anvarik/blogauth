@@ -1,4 +1,4 @@
-appServices.factory('AuthenticationService', function() {
+angular.module('appServices', []).factory('AuthenticationService', function () {
     var auth = {
         isLogged: false
     }
@@ -6,7 +6,7 @@ appServices.factory('AuthenticationService', function() {
     return auth;
 });
 
-appServices.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService) {
+angular.module('appServices').factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -37,7 +37,7 @@ appServices.factory('TokenInterceptor', function ($q, $window, $location, Authen
     };
 });
 
-appServices.factory('PostService', function($http) {
+angular.module('appServices').factory('PostService', function ($http) {
     return {
         findAllPublished: function() {
             return $http.get(options.api.base_url + '/post');
@@ -73,7 +73,7 @@ appServices.factory('PostService', function($http) {
     };
 });
 
-appServices.factory('UserService', function($http) {
+angular.module('appServices').factory('UserService', function ($http) {
     return {
         logIn: function(username, password) {
             return $http.post(options.api.base_url + '/login', {username: username, password: password});

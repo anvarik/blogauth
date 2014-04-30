@@ -1,13 +1,14 @@
 <section class="post">
     <ol class="breadcrumb">
-        <li><a href="#/">Blog</a></li>
+        <li><a href="/">Blog</a></li>
         <li class="active">Administration</li>
+        <li><a href ng-click="logout()">Log Out</a></li>
     </ol>
 
     <div class="alert alert-danger" ng-show="message.is_error">{{message.message}}</div>
     <div class="alert alert-success" ng-show="message.is_success">{{message.message}}</div>
 
-    <a href="#/admin/post/create" class="btn btn-success" style="margin-bottom: 15px;">Create a new post</a>
+    <a href="/admin/post/create" class="btn btn-success" style="margin-bottom: 15px;">Create a new post</a>
 
     <table class="table table-condensed table-hover">
         <thead>
@@ -29,11 +30,13 @@
                     <button ng-show="post.is_published" class="btn btn-warning btn-xs" ng-click="updatePublishState(post, false)"><span class="glyphicon glyphicon-eye-close"></span></button>
                     <button ng-show="!post.is_published" class="btn btn-success btn-xs" ng-click="updatePublishState(post, true)"><span class="glyphicon glyphicon-eye-open"></span></button>
                     
-                    <a href="#/admin/post/edit/{{post._id}}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="/admin/post/edit/{{post._id}}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
                     <button class="btn btn-danger btn-xs" ng-click="deletePost(post._id)"><span class="glyphicon glyphicon-trash"></span></button>
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <h3><a href="/admin/logout">log out</a></h3>
 
 </section>
