@@ -190,6 +190,21 @@ angular.module('appControllers').controller('AdminUserCtrl', ['$scope', '$locati
             }
         }
 
+        // NOT IMPLEMENTED YET
+        $scope.register = function logIn(username, password) {
+            if (username != null && password != null) {
+
+                UserService.logIn(username, password).success(function (data) {
+                    AuthenticationService.isLogged = true;
+                    $window.sessionStorage.token = data.token;
+                    $location.path("/admin");
+                }).error(function (status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+        }
+
         
     }
 ]);

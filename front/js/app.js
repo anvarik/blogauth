@@ -41,6 +41,10 @@ app.config(function ($locationProvider, $routeProvider) {
             templateUrl: '/blog/partials/admin.login.html',
             controller: 'AdminUserCtrl'
         }).
+        when('/admin/register', {
+            templateUrl: '/blog/partials/admin.register.html',
+            controller: 'AdminUserCtrl'
+        }).
         otherwise({
             redirectTo: '/'
         });
